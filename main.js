@@ -1,5 +1,6 @@
-const { app, BrowserWindow, Menu } = require("electron")
+const { app, BrowserWindow, Menu, ipcMain } = require("electron")
 const path = require("path")
+const { getNames } = require("./models/users")
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
 
@@ -76,7 +77,7 @@ const menu = [
 
 app.whenReady().then(() => {
     createMainWindow()
-
+    ipcMain.handle('get-names', getNames)
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length == 0) createMainWindow()
     })

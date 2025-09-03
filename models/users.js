@@ -1,4 +1,4 @@
-const db = require("./db_mgr")
+const db = await window.electronAPI.db;
 
 exports.getNames = () => {
     const query = "select * from users";

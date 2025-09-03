@@ -1,4 +1,3 @@
-const dbMgr = require('better-sqlite3')
-const db = dbMgr("../database.db", {})
+import Database from "better-sqlite3"
 
-exports.db = db
+exports.db = Database("../database.db", {verbose: console.log})
