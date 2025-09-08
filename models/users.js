@@ -1,6 +1,6 @@
-const db = await window.electronAPI.db;
+import { db } from "./db_mgr.js";
 
-exports.getNames = () => {
+export const getNames = () => {
     const query = "select * from users";
     let stmt = db.prepare(query)
     let res = stmt.all()

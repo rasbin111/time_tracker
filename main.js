@@ -1,8 +1,18 @@
-const { app, BrowserWindow, Menu, ipcMain } = require("electron")
-const path = require("path")
-const { getNames } = require("./models/users")
+import { app, BrowserWindow, Menu, ipcMain } from "electron"
+import path from "path"
+import { fileURLToPath } from "url";
+import { getNames } from "./models/users.js"
+import { getTimeTracker, postTimeTracker } from "./models/time_tracker.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
+
+ipcMain.handle('get-names', getNames);
+ipcMain.handle('post-tracker', postTimeTracker)
+ipcMain.handle('get-tracker', getTimeTracker)
 
 const createMainWindow = () => {
     const mainWindow = new BrowserWindow({
@@ -10,9 +20,7 @@ const createMainWindow = () => {
         height: 600,
         title: "Time Tracker",
         webPreferences: {
-            contextIsolation: true,
-            nodeIntegration: true,
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.cjs')
         }
     })
 
@@ -32,7 +40,9 @@ const createAboutWindow = () => {
         height: 300,
         title: "About Time Tracker",
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
+            contextIsolation: true,
+            nodeIntegration: false
         }
 
     })
