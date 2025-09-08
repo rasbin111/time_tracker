@@ -1,0 +1,12 @@
+.paused {
+  color: white;
+  background-color: red;
+}
+
+.hidden {
+  display: none;
+}
+
+.active{
+    display: inline;
+}
